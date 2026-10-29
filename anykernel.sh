@@ -37,11 +37,17 @@ PATCH_VBMETA_FLAG=auto;
 # import functions/variables and setup patching - see for reference (DO NOT REMOVE)
 . tools/ak3-core.sh;
 
+kernel_version=$(cat /proc/version | awk -F '-' '{print $1}' | awk '{print $3}')
+
+ui_print "Flashing Kernel..."
+ui_print "Kernel version detected:".$kernel_version
+
 # boot install
-dump_boot; # use split_boot to skip ramdisk unpack, e.g. for devices with init_boot ramdisk
-
-write_boot; # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
+if [ -L "/dev/block/bootdevice/by-name/init_boot_a" -o -L "/dev/block/by-name/init_boot_a" ]; then
+    split_boot # for devices with init_boot ramdisk
+    flash_boot # for devices with init_boot ramdisk
+else
+    dump_boot # use split_boot to skip ramdisk unpack, e.g. for devices with init_boot ramdisk
+    write_boot # use flash_boot to skip ramdisk repack, e.g. for devices with init_boot ramdisk
+fi
 ## end boot install
-
-
-
