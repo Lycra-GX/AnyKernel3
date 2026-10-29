@@ -4,7 +4,8 @@
 ### AnyKernel setup
 # global properties
 properties() { '
-kernel.string=ExampleKernel by osm0sis @ xda-developers
+kernel.string=DragonKnight-v1.0
+kernel.for=GKI
 kernel.compiler=clang-r510928
 kernel.made=Lycra-GX
 kernel.version=6.1.177
